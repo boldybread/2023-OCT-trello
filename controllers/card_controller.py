@@ -5,9 +5,10 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from init import db
 from models.card import Card, cards_schema, card_schema
-
+from controllers.comment_controller import comments_bp
 
 cards_bp = Blueprint('cards', __name__, url_prefix='/cards')
+cards_bp.register_blueprint(comments_bp)
 
 # http://localhost:8080/cards - GET
 @cards_bp.route('/')
@@ -89,3 +90,4 @@ def update_card(card_id):
     else:
         # return error msg
         return {'error': f'Card with id {card_id} not found'}, 404
+    
